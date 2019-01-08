@@ -1,13 +1,12 @@
 node {
 		   def tag = ""
 		   def imageTag = "us.gcr.io/${project}/happistarfrontstage:${tag}"
-	def gitID = "${github-id}"
   try {
 
 
 		 
 		   stage('Clone Front End Project') {
-			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${params.github-id}", url: 'https://github.com/ToubroInfo/AngularUI.git']]])
+			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${params.gitID}", url: 'https://github.com/ToubroInfo/AngularUI.git']]])
 			 tag = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 			 imageTag = imageTag + tag 
 		   }
