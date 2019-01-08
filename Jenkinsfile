@@ -7,7 +7,7 @@ node {
 
 		 
 		   stage('Clone Front End Project') {
-			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: gitID,url: 'https://github.com/ToubroInfo/AngularUI.git']]])
+			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${github-id}", url: 'https://github.com/ToubroInfo/AngularUI.git']]])
 			 tag = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 			 imageTag = imageTag + tag 
 		   }
