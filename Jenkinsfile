@@ -17,6 +17,7 @@ node {
 			  dir ('client') {
 				
 				sh("npm install")
+			  }
 
 		
 		   }
