@@ -55,20 +55,7 @@ node {
 def notifyBuild(String buildStatus = 'STARTED', tag) {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
- 
-  // Default values
-  def baseSlackUrl = 'https://iaoc.slack.com/services/hooks/jenkins-ci/'
-  def slackChannel = 'builds_notification'
-  def teamSlackDomain = 'iaoc' 
-  def tokenCredentials = 'jenkins-slack-integration'
-  def colorName = 'RED'
-  def colorCode = '#FF0000'
-  def subj = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def details = '''${SCRIPT, template="groovy-html.template"}'''
-  def summary = """
-  version tag: ${tag}  
-  ${details}
-  """
+
   
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -82,15 +69,4 @@ def notifyBuild(String buildStatus = 'STARTED', tag) {
     colorCode = '#FF0000'
   }
  
-  
-  // Send Emails only postbuild
-  if (buildStatus == 'TARTED') {
-  emailext (
-	  to: "devops-mnl@emeritussoftware.ltd;qa-distribution-list@emeritussoftware.ltd;dev-ph@emeritussoftware.ltd;ba@emeritussoftware.ltd",
-      from: "jenkins@aos.services",
-      subject: subj,
-      body: summary,
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-    )
-	}
 }
