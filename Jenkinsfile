@@ -17,11 +17,25 @@ node {
 			  dir ('client') {
 				
 				sh("npm install")
+				sh("npm install @angular/cli@1.7.4 --no-optional")
+				
+				sh("npm install @angular-devkit/core")
+				sh("npm install @ngtools/json-schema")
+				sh("npm install typescript@'>=2.4.2 <2.7.0'")
+				sh("npm install @ngrx/store")
+				sh("npm install @ngx-translate/core")
+				  
+				sh("node_modules/.bin/ng -v")
+				sh("npm run build-alphastaging")
 			  }
-
-		
+			 
+			 sh("cp -R ./client/dist/ ./server")
 		   }
 		   
+		   stage('Bake Docker Image') {
+			 sh("echo ${imageTag}")
+		   }
+
 
 
 		   stage('Print image tag ID') {
@@ -83,6 +97,3 @@ def notifyBuild(String buildStatus = 'STARTED', tag) {
     )
 	}
 }
-
-	
-	
