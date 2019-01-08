@@ -11,6 +11,14 @@ node {
 			 imageTag = imageTag + tag 
 		   }
 		   
+	  
+	  	  	   
+	 	stage('Push Updates') {
+		 sshagent(['74c32347-fa60-4582-bed0-3d55a4fe8458']) {
+		 sh("git pull origin masterintegration")
+		 }
+}
+	  
 		   stage('Build Angular Project') {
 			 sh("ls")
 
