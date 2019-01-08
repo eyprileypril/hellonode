@@ -18,7 +18,7 @@ node {
 			sshagent(["${params.gitUUID}"]) {
 			sh("git remote set-url origin git@github.com:ToubroInfo/AngularUI.git")
 			sh("git checkout thai-web")
-		 //sh("git pull origin masterintegration")
+		 sh("git pull origin masterintegration")
 		 }
 }
 	  
@@ -27,7 +27,7 @@ node {
 
 			  dir ('client') {
 				
-				sh("npm install")
+				//sh("npm install")
 
 			  }
 			 
