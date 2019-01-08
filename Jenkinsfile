@@ -16,9 +16,9 @@ node {
 	  	  	   
 	 	stage('Push Updates') {
 			sshagent(["${params.gitUUID}"]) {
-							sh("git remote set-url origin git@github.com:ToubroInfo/AngularUI.git")
+			sh("git remote set-url origin git@github.com:ToubroInfo/AngularUI.git")
 			sh("git checkout thai-web")
-		 sh("git pull origin masterintegration")
+		 //sh("git pull origin masterintegration")
 		 }
 }
 	  
