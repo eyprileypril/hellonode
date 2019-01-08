@@ -6,7 +6,7 @@ node {
 
 		 
 		   stage('Clone Front End Project') {
-			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "toffcso-github-com",url: 'https://github.com/ToubroInfo/AngularUI.git']]])
+			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-april',url: 'https://github.com/ToubroInfo/AngularUI.git']]])
 			 tag = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 			 imageTag = imageTag + tag 
 		   }
@@ -18,9 +18,10 @@ node {
 				
 				sh("npm install")
 
-			  }
-
+		
 		   }
+		   
+
 
 		   stage('Print image tag ID') {
 			  sh("echo success staging build and published ${imageTag}")
@@ -68,10 +69,10 @@ def notifyBuild(String buildStatus = 'STARTED', tag) {
   }
  
   // Send notifications
-  //slackSend (baseUrl: baseSlackUrl, channel: slackChannel, teamDomain: teamSlackDomain, tokenCredentialId: tokenCredentials, color: colorCode, message: subj)
+  //slackSend (baseUrl: baseSlackUrl, channel: slackChannel, teamDomain: teamSlackDomain, tokenCredentialId: tokenCredentials, //color: colorCode, message: subj)
 
   // Send Emails only postbuild
-  if (buildStatus == 'SARTED') {
+  if (buildStatus == 'TARTED') {
   emailext (
 	  to: "devops-mnl@emeritussoftware.ltd;qa-distribution-list@emeritussoftware.ltd;dev-ph@emeritussoftware.ltd;ba@emeritussoftware.ltd",
       from: "jenkins@aos.services",
@@ -82,4 +83,5 @@ def notifyBuild(String buildStatus = 'STARTED', tag) {
 	}
 }
 
+	
 	
