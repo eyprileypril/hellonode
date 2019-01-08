@@ -2,11 +2,11 @@ node {
 		   def tag = ""
 		   def imageTag = "us.gcr.io/${project}/happistarfrontstage:${tag}"
   try {
-    notifyBuild('STARTED', "${tag}")  
+
 
 		 
 		   stage('Clone Front End Project') {
-			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-april',url: 'https://github.com/ToubroInfo/AngularUI.git']]])
+			 checkout([$class: 'GitSCM', branches: [[name: '*/thai-web']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: './']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'toffcso-github-com',url: 'https://github.com/ToubroInfo/AngularUI.git']]])
 			 tag = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 			 imageTag = imageTag + tag 
 		   }
@@ -34,9 +34,8 @@ node {
 		   
 		   stage('Bake Docker Image') {
 			 sh("echo ${imageTag}")
+		
 		   }
-
-
 
 		   stage('Print image tag ID') {
 			  sh("echo success staging build and published ${imageTag}")
@@ -83,9 +82,7 @@ def notifyBuild(String buildStatus = 'STARTED', tag) {
     colorCode = '#FF0000'
   }
  
-  // Send notifications
-  //slackSend (baseUrl: baseSlackUrl, channel: slackChannel, teamDomain: teamSlackDomain, tokenCredentialId: tokenCredentials, //color: colorCode, message: subj)
-
+  
   // Send Emails only postbuild
   if (buildStatus == 'TARTED') {
   emailext (
